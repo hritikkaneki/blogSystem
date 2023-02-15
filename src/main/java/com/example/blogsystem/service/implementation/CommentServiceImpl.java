@@ -1,10 +1,11 @@
-package com.example.blogsystem.service;
+package com.example.blogsystem.service.implementation;
 
 import com.example.blogsystem.dto.CommentDTO;
 import com.example.blogsystem.entity.Comment;
 import com.example.blogsystem.exception.CustomException;
 import com.example.blogsystem.mapper.CommentMapper;
 import com.example.blogsystem.repository.CommentRepository;
+import com.example.blogsystem.service.CommentService;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;

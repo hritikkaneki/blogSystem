@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 
-import javax.persistence.OneToMany;
+import jakarta.persistence.OneToMany;
 import java.util.Date;
 import java.util.List;
 @Getter

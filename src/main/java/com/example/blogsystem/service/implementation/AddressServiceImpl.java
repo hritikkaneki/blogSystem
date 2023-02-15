@@ -1,15 +1,16 @@
-package com.example.blogsystem.service;
+package com.example.blogsystem.service.implementation;
 
 import com.example.blogsystem.dto.AddressDTO;
 import com.example.blogsystem.entity.Address;
 import com.example.blogsystem.mapper.AddressMapper;
 import com.example.blogsystem.repository.AddressRepository;
+import com.example.blogsystem.service.AddressService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class AddressServiceImpl implements AddressService{
+public class AddressServiceImpl implements AddressService {
     private final AddressRepository addressRepository;
     private final AddressMapper addressMapper;
 

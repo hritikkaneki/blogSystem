@@ -16,10 +16,12 @@ public interface UserMapper {
 
    @Mapping(source = "address",target = "address")
    @Mapping(source = "blog",target = "blogs")
+   @Mapping(source = "role",target = "role")
     UserDTO userDTO(User user);
 
     @Mapping(source = "address", target = "address")
     @Mapping(source = "blogs", target = "blog")
+    @Mapping(source = "role", target = "role")
     User dtoUser(UserDTO userDTO);
 
     @Mapping(target = "email",ignore = true)

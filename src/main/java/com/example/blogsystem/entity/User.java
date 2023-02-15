@@ -1,9 +1,8 @@
 package com.example.blogsystem.entity;
 import lombok.*;
-import org.hibernate.annotations.Cascade;
 
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
@@ -16,6 +15,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(unique = true)
     private String userName;
     @Column(unique = true)
     private String email;
@@ -25,4 +25,10 @@ public class User {
     @OneToMany(mappedBy = "user",cascade = CascadeType.REMOVE)
 
     private List<Blog> blog;
+
+
+    @ManyToOne
+    @JoinColumn(name = "role_id")
+    private Role role;
+
 }

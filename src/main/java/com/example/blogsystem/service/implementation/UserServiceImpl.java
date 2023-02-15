@@ -1,28 +1,33 @@
-package com.example.blogsystem.service;
+package com.example.blogsystem.service.implementation;
 
 import com.example.blogsystem.dto.UserDTO;
 import com.example.blogsystem.entity.User;
 import com.example.blogsystem.exception.CustomException;
 import com.example.blogsystem.mapper.UserMapper;
 import com.example.blogsystem.repository.UserRepository;
+import com.example.blogsystem.service.UserService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
 
-    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper) {
+    private final PasswordEncoder passwordEncoder;
+
+    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public UserDTO saveUser(User user) {
 //        User user= userMapper.dtoUser(userDTO);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         User save = userRepository.save(user);
-        System.out.println(save);
         return userMapper.userDTO(save);
     }
 

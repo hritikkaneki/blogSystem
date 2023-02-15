@@ -1,5 +1,6 @@
 package com.example.blogsystem.dto;
 
+import com.example.blogsystem.entity.Role;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,6 +22,7 @@ public class UserDTO {
 
     private AddressDTO address;
     private List<BlogDTO> blogs;
+    private Role role;
 
 
 }
