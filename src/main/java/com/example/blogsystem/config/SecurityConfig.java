@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -19,18 +20,21 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-    private final UserDetailService userDetailService;
+    private final UserDetailsService userDetailsService;
     private final JwtAuthFilter jwtAuthFilter;
 
-    public SecurityConfig(UserDetailService userDetailService, JwtAuthFilter jwtAuthFilter) {
-        this.userDetailService = userDetailService;
+    public SecurityConfig(UserDetailService userDetailsService, JwtAuthFilter jwtAuthFilter) {
+        this.userDetailsService = userDetailsService;
         this.jwtAuthFilter = jwtAuthFilter;
     }
-
+    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http.csrf().disable()
-                .authorizeHttpRequests(auth -> auth.requestMatchers("/addUser","/authenticate").permitAll()
-                        .anyRequest().authenticated())
+        return http
+                .csrf().disable()
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/saveUser","/authenticate","/uploadFile").permitAll()
+                        .anyRequest().authenticated()
+                       )
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authenticationProvider(authenticationProvider())
@@ -46,7 +50,7 @@ public class SecurityConfig {
     @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
-        daoAuthenticationProvider.setUserDetailsService(userDetailService);
+        daoAuthenticationProvider.setUserDetailsService(userDetailsService);
         daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
         return daoAuthenticationProvider;
 

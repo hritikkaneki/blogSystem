@@ -5,6 +5,7 @@ import com.example.blogsystem.exception.CustomException;
 import com.example.blogsystem.service.BlogService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -25,6 +26,7 @@ public class BlogController {
     }
 
     @DeleteMapping("/deleteBlog/{id}")
+    @PreAuthorize("hasAnyAuthority('Admin')")
     public String deleteBlog(@PathVariable("id")Long id) throws CustomException {
         blogService.deleteBlog(id);
         return "Successfully deleted Blog with Id:"+id;

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
-@Service
+@Component
 public class UserDetailService implements UserDetailsService {
 
  private final UserRepository userRepository;
@@ -22,7 +22,7 @@ public class UserDetailService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<User>user = userRepository.findByUsername(username);
+        Optional<User>user = userRepository.findByUserName(username);
         //user.get().getRole();
         return user.map(UserUserDetails::new).orElseThrow(()->new UsernameNotFoundException("Invalid User"+username));
     }
